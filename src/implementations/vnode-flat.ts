@@ -62,7 +62,8 @@ export const vnode_setProp = (vnode: any, key: string, value: unknown) => {
   }
 };
 
-const VNodeArray = class VNode extends Array {
+
+const VNodeArray = class VNode {
   static createElement(
     flags: VNodeFlags,
     parent: VNode | null,
@@ -73,7 +74,7 @@ const VNodeArray = class VNode extends Array {
     element: Element,
     elementName: string | undefined
   ) {
-    const vnode = new VNode(
+    return [
       flags,
       parent,
       previousSibling,
@@ -82,8 +83,7 @@ const VNodeArray = class VNode extends Array {
       lastChild,
       element,
       elementName
-    ) as any;
-    return vnode;
+    ] as any;
   }
 
   static createText(
@@ -94,15 +94,14 @@ const VNodeArray = class VNode extends Array {
     textNode: Text | null,
     text: string | undefined
   ) {
-    const vnode = new VNode(
+    return [
       flags,
       parent,
       previousSibling,
       nextSibling,
       textNode,
       text
-    ) as any;
-    return vnode;
+    ] as any;
   }
 
   static createVirtual(
@@ -113,27 +112,16 @@ const VNodeArray = class VNode extends Array {
     firstChild: VNode | null,
     lastChild: VNode | null
   ) {
-    const vnode = new VNode(
+    return [
       flags,
       parent,
       previousSibling,
       nextSibling,
       firstChild,
       lastChild
-    ) as any;
-    return vnode;
+    ] as any;
   }
 
-  constructor(
-    flags: VNodeFlags,
-    parent: VNode | null,
-    previousSibling: VNode | null | undefined,
-    nextSibling: VNode | null | undefined,
-    ...rest: any[]
-  ) {
-    // @ts-expect-error
-    super(flags, parent, previousSibling, nextSibling, ...rest);
-  }
 };
 
 export const enum VNodeFlags {
