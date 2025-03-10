@@ -26,7 +26,7 @@ import {
   vnode_getProp as vnode_getPropMapProps,
 } from "./implementations/vnode-map-props";
 
-const PROP_COUNT = 1;
+const PROP_COUNT = 30;
 const SET_COUNT = 100;
 
 describe("vnode set props", () => {
