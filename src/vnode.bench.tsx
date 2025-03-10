@@ -9,6 +9,16 @@ import {
   vnode_setProp as vnode_setPropFlat,
   vnode_getProp as vnode_getPropFlat,
 } from "./implementations/vnode-flat";
+import {
+  vnode_newElement as vnode_newElementNumeric,
+  vnode_setProp as vnode_setPropNumeric,
+  vnode_getProp as vnode_getPropNumeric,
+} from "./implementations/vnode-numeric-keys";
+import {
+  vnode_newElement as vnode_newElementFlatNumeric,
+  vnode_setProp as vnode_setPropFlatNumeric,
+  vnode_getProp as vnode_getPropFlatNumeric,
+} from "./implementations/vnode-flat-numeric-keys";
 import { ElementVNode } from "./implementations/vnode-object";
 import {
   vnode_newElement as vnode_newElementMapProps,
@@ -16,9 +26,8 @@ import {
   vnode_getProp as vnode_getPropMapProps,
 } from "./implementations/vnode-map-props";
 
-const PROP_COUNT = 10;
+const PROP_COUNT = 1;
 const SET_COUNT = 100;
-let once = true;
 
 describe("vnode set props", () => {
   bench("vnode flat array", () => {
@@ -38,6 +47,26 @@ describe("vnode set props", () => {
       const value = "foo" + i;
       for (let j = 0; j < SET_COUNT; j++) {
         vnode_setProp(vnodeElement, key, value);
+      }
+    }
+  });
+  bench("vnode numeric keys array", () => {
+    const vnodeElement = vnode_newElementNumeric("div", 0);
+    for (let i = 0; i < PROP_COUNT; i++) {
+      const key = "id" + i;
+      const value = "foo" + i;
+      for (let j = 0; j < SET_COUNT; j++) {
+        vnode_setPropNumeric(vnodeElement, key, value);
+      }
+    }
+  });
+  bench("vnode numeric keys flat array", () => {
+    const vnodeElement = vnode_newElementFlatNumeric("div");
+    for (let i = 0; i < PROP_COUNT; i++) {
+      const key = "id" + i;
+      const value = "foo" + i;
+      for (let j = 0; j < SET_COUNT; j++) {
+        vnode_setPropFlatNumeric(vnodeElement, key, value);
       }
     }
   });
